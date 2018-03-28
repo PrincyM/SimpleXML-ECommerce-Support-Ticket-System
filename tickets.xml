@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tickets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="tickets.xsd">
+    <ticket id="201">
+         <issueDate>2018-01-07</issueDate>
+         <status>In Progress</status>
+         <issueCategory>Order Question</issueCategory>
+         <clientId>5001</clientId>
+         <messages>
+             <message userId="5001" dated="2018-01-07">
+                When would I receive my order?
+            </message>
+             <message userId="1004" dated="2018-01-08">
+                Thank you for contacting us about your order. Can I have the order ID so that we can investigate further?
+            </message>
+         </messages>
+    </ticket>
+    <ticket id="202">
+         <issueDate>2018-01-29</issueDate>
+         <status>Resolved</status>
+         <issueCategory>Shipping</issueCategory>
+         <clientId>5003</clientId>
+         <messages>
+             <message userId="5003" dated="2018-01-29">
+                When will my order number: 10006 be shipped?
+            </message>
+             <message userId="1006" dated="2018-01-30">
+                Thank you for contacting us about your order: 10006. Your order will be shipped in the next 24 hours
+            </message>
+         </messages>
+    </ticket>
+    <ticket id="203">
+         <issueDate>2018-02-14</issueDate>
+         <status>Resolved</status>
+         <issueCategory>Product Availability</issueCategory>
+         <clientId>5004</clientId>
+         <messages>
+             <message userId="5004" dated="2018-02-14">
+                Is this top still available?
+            </message>
+             <message userId="1023" dated="2018-02-15">
+                Thank you for contacting us. Could you please specify which product with a product link or ID?
+            </message>
+         </messages>
+     </ticket>
+<ticket id="301"><issueDate>2018-03-29</issueDate><status>In Progress</status><issueCategory>Product Availability</issueCategory><clientId>5001</clientId><messages><message userId="5001">hello there</message></messages></ticket><ticket id="305"><issueDate>2018-03-28</issueDate><status>In Progress</status><issueCategory>Shipping</issueCategory><clientId>5001</clientId><messages><message userId="5001">I have an issue with my order. </message></messages></ticket><ticket id="310"><issueDate>2018-03-29</issueDate><status>In Progress</status><issueCategory>Shipping</issueCategory><clientId>5001</clientId><messages><message userId="5001">new ticket here</message></messages></ticket></tickets>

@@ -8,7 +8,7 @@ $users = simplexml_load_file("users.xml");
 
 session_start();
 
-$userIdLogged = $_SESSION['loggedInUserId']; // getting session variable to add it to XML data directly
+$userIdLogged = $_SESSION['loggedInUserId']; // getting session variable to access and add it to XML data directly
 
 
 if(isset($_GET['id']))

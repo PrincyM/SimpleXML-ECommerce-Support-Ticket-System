@@ -10,9 +10,6 @@ error_reporting(E_ALL);
  */
 session_start();
 
-
-//echo $_SESSION["error"];
-
 $users = simplexml_load_file("users.xml");
 
 if(isset($_POST['Submit']))
@@ -51,7 +48,7 @@ if(isset($_POST['Submit']))
             }
             else {
                 echo "Username or password is incorrect";
-                //header("Location:login.php");
+
             }
 
         }

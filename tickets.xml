@@ -2,7 +2,7 @@
 <tickets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="tickets.xsd">
     <ticket id="201">
          <issueDate>2018-01-07</issueDate>
-         <status>In Progress</status>
+         <status>Resolved</status>
          <issueCategory>Order Question</issueCategory>
          <clientId>5001</clientId>
          <messages>

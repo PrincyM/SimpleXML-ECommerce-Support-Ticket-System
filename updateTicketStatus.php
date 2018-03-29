@@ -32,17 +32,6 @@ if(isset($_GET['id']))
 
     if(isset($_POST['updateStatus'])) // if the status update button is clicked
     {
-//        $xml = new DOMDocument();
-//        $xml->loadXML("tickets.xml");
-//        $status = $xml->getElementsByTagName(status);
-//        var_dump($status);
-//        if(!xml)
-//        {
-//            echo 'Error while parsing the document';
-//            exit; 
-//        }
-
-//        $s = simplexml_import_dom($xml);
 
         $ticketStatusUpdate = $_POST['ticketStatus'];
         var_dump($ticketStatusUpdate);
@@ -50,11 +39,9 @@ if(isset($_GET['id']))
         $ticketStatus = $tickets->xpath("/tickets/ticket[@id=$id]/status")[0];
         var_dump($ticketStatus);
 
-        $status = $ticket->addChild('status',$ticketStatusUpdate);
+        $ticket->status = $ticketStatusUpdate; // replacing the status node with the new status update
 
-       // $tickets->saveXML("tickets.xml");
-
-//        header("Location: viewTicketStaff.php");
+       $tickets->saveXML("tickets.xml");
 
     }
 

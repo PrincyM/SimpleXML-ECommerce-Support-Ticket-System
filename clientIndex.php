@@ -16,7 +16,7 @@ $users = simplexml_load_file("users.xml");
 $userIdLogged = $_SESSION['loggedInUserId']; // getting id from session variable
 $userIdLoggedName = $_SESSION['loggedInUserName']; // getting name of the user from session variable
 
-$ticket = $tickets->xpath("/tickets/ticket/clientId[text()=$userIdLogged]/parent::*"); // using the xpath for
+$ticket = $tickets->xpath("/tickets/ticket/clientId[text()=$userIdLogged]/parent::*"); // using the xpath to get tickets raised by this user logged in
 
 ?>
 
@@ -50,11 +50,11 @@ $ticket = $tickets->xpath("/tickets/ticket/clientId[text()=$userIdLogged]/parent
         <?php foreach ($ticket as $ticketElement) :?>
             <tr>
 
-                <td><?php echo $ticketElement->attributes(); ?></td> <!-- users->user[$userIdLogged] -->
+                <td><?php echo $ticketElement->attributes(); ?></td>
                 <td><?php echo $ticketElement->issueDate; ?></td>
                 <td><?php echo $ticketElement->status; ?></td>
                 <td><?php echo $ticketElement->issueCategory; ?></td>
-                <td><a class="btn btn-primary" href="viewTicket.php/?id=<?php echo $ticketElement->attributes(); ?>" role="button">
+                <td><a class="btn btn-primary" href="viewTicketClient.php/?id=<?php echo $ticketElement->attributes(); ?>" role="button">
                         View Details</a></td>
             </tr>
         <?php endforeach; ?>

@@ -44,4 +44,19 @@
         <zipCode>H1A0A1</zipCode>
      </location>
     </user>
+    <user role="staff" id="1023">
+        <name>
+            <first>Dianne</first>
+            <middle>K</middle>
+            <last>Walton</last>
+        </name>
+        <username>DianneW</username>
+        <password>dianne012</password>
+        <location>
+            <city>Toronto</city>
+            <province>Ontario</province>
+            <country>Canada</country>
+            <zipCode>L6T2M5</zipCode>
+        </location>
+    </user>
 </users>

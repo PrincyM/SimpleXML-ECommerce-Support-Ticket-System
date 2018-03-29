@@ -15,7 +15,7 @@ $tickets = simplexml_load_file("tickets.xml");
 $tickets->preserveWhiteSpace = false;
 $tickets->formatOutput = true;
 
-$userIdLogged = $_SESSION['loggedInUserId']; // to add it to XML data directly
+$userIdLogged = $_SESSION['loggedInUserId']; // to add it to XML data directly and use it in the next page
 
 
 

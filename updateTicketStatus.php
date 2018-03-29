@@ -30,6 +30,34 @@ if(isset($_GET['id']))
 
     }
 
+    if(isset($_POST['updateStatus'])) // if the status update button is clicked
+    {
+//        $xml = new DOMDocument();
+//        $xml->loadXML("tickets.xml");
+//        $status = $xml->getElementsByTagName(status);
+//        var_dump($status);
+//        if(!xml)
+//        {
+//            echo 'Error while parsing the document';
+//            exit; 
+//        }
+
+//        $s = simplexml_import_dom($xml);
+
+        $ticketStatusUpdate = $_POST['ticketStatus'];
+        var_dump($ticketStatusUpdate);
+
+        $ticketStatus = $tickets->xpath("/tickets/ticket[@id=$id]/status")[0];
+        var_dump($ticketStatus);
+
+        $status = $ticket->addChild('status',$ticketStatusUpdate);
+
+       // $tickets->saveXML("tickets.xml");
+
+//        header("Location: viewTicketStaff.php");
+
+    }
+
 }
 
 
@@ -101,15 +129,15 @@ function getMessage($userId,$ticketId)
         </dl>
     </div>
     <form method="post">
-        <div class="col-md-6 mb-3">
-            <label for="message">Your message</label>
-            <textarea class="form-control" rows="5" name="message" placeholder="Here you can enter additional messages for the client to read..."></textarea>
-        </div>
-
-        <input class="btn btn-primary" type="submit" name="addMessage" value="Add Message" role="button"/>
+            <label for="ticketStatus"></label>
+                <select class="custom-select col-sm-3" name="ticketStatus">
+                <option selected><?php echo  $ticket[0]->status; ?></option>
+                <option value="New">New</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Resolved">Resolved</option>
+                </select>
+                <input class="btn btn-primary" type="submit" name="updateStatus" value="Update Status" role="button"/>
     </form>
-
-
 </div> <!-- end of container -->
 
 </body>

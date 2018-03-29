@@ -16,8 +16,6 @@ $users = simplexml_load_file("users.xml");
 $userIdLogged = $_SESSION['loggedInUserId']; // getting id from session variable
 $userIdLoggedName = $_SESSION['loggedInUserName']; // getting name of the user from session variable
 
-//$ticket = $tickets->xpath("/tickets/ticket/clientId[text()=$userIdLogged]/parent::*"); // using the xpath for
-
 ?>
 
 <html>
@@ -44,6 +42,7 @@ $userIdLoggedName = $_SESSION['loggedInUserName']; // getting name of the user f
             <th scope="col">Ticket Status</th>
             <th scope="col">Category</th>
             <th scope="col">Action</th>
+            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -55,7 +54,9 @@ $userIdLoggedName = $_SESSION['loggedInUserName']; // getting name of the user f
                 <td><?php echo $ticketElement->status; ?></td>
                 <td><?php echo $ticketElement->issueCategory; ?></td>
                 <td><a class="btn btn-primary" href="viewTicketStaff.php/?id=<?php echo $ticketElement->attributes(); ?>" role="button">
-                        View Details</a></td>
+                        View and Add Message</a></td>
+                <td><a class="btn btn-primary" href="updateTicketStatus.php/?id=<?php echo $ticketElement->attributes(); ?>" role="button">
+                        Update Status</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

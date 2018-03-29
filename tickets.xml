@@ -12,7 +12,7 @@
              <message userId="1004" dated="2018-01-08">
                 Thank you for contacting us about your order. Can I have the order ID so that we can investigate further?
             </message>
-         </messages>
+        <message userId="5001">Hi, is there any update? </message><message userId="5001">hi, any update? </message><message userId="1004">New message</message><message userId="1004">i need an update right now!</message><message userId="1004">We will get back to you, shortly!</message></messages>
     </ticket>
     <ticket id="202">
          <issueDate>2018-01-29</issueDate>
@@ -40,6 +40,6 @@
              <message userId="1023" dated="2018-02-15">
                 Thank you for contacting us. Could you please specify which product with a product link or ID?
             </message>
-         </messages>
+         <message userId="5004">Here's the product ID: #23004</message><message userId="5004">I have looked it up and yes, it is available. </message></messages>
      </ticket>
 <ticket id="301"><issueDate>2018-03-29</issueDate><status>In Progress</status><issueCategory>Product Availability</issueCategory><clientId>5001</clientId><messages><message userId="5001">hello there</message></messages></ticket><ticket id="305"><issueDate>2018-03-28</issueDate><status>In Progress</status><issueCategory>Shipping</issueCategory><clientId>5001</clientId><messages><message userId="5001">I have an issue with my order. </message></messages></ticket><ticket id="310"><issueDate>2018-03-29</issueDate><status>In Progress</status><issueCategory>Shipping</issueCategory><clientId>5001</clientId><messages><message userId="5001">new ticket here</message></messages></ticket></tickets>

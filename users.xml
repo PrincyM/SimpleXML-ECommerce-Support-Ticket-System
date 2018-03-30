@@ -30,7 +30,7 @@
         <zipCode>V5H3Z7</zipCode>
      </location>
     </user>
-    <user role="client" id="5004">
+    <user role="client" id="5003">
      <name>
         <first>Candice</first>
         <last>Porter</last>
@@ -57,6 +57,20 @@
             <province>Ontario</province>
             <country>Canada</country>
             <zipCode>L6T2M5</zipCode>
+        </location>
+    </user>
+    <user role="client" id="5004">
+        <name>
+            <first>Rita</first>
+            <last>Stephens</last>
+        </name>
+        <username>RitaP</username>
+        <password>rita015</password>
+        <location>
+            <city>Montreal</city>
+            <province>Quebec</province>
+            <country>Canada</country>
+            <zipCode>H1B0A2</zipCode>
         </location>
     </user>
 </users>

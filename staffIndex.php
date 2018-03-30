@@ -16,6 +16,19 @@ $users = simplexml_load_file("users.xml");
 $userIdLogged = $_SESSION['loggedInUserId']; // getting id from session variable
 $userIdLoggedName = $_SESSION['loggedInUserName']; // getting name of the user from session variable
 
+if(getUserRole($userIdLogged) == 'client')
+{
+    header("Location: error.php"); // redirect user to error page if the client tries to access this page
+}
+
+function getUserRole($userId)
+{
+    $users = simplexml_load_file("users.xml");
+    $user = $users->xpath("/users/user[@id=$userId]")[0];
+    echo $user;
+    return $user->attributes()->role; // return the role of the userId
+}
+
 ?>
 
 <html>
@@ -29,11 +42,13 @@ $userIdLoggedName = $_SESSION['loggedInUserName']; // getting name of the user f
 </head>
 
 <body>
+<div class="container">
+<a class="btn btn-primary" href="logout.php" role="button">Logout</a>
 <h3 class="text-center">Welcome, <?php echo $userIdLoggedName; ?> from the support staff!</h3>
 
-<p class="text-center">The following tickets are in queue right now from clients </p>
+<p class="text-center">The following tickets are in queue right now from clients</p>
 
-<div class="container">
+
     <table class="table table-hover">
         <thead>
         <tr>
@@ -53,15 +68,14 @@ $userIdLoggedName = $_SESSION['loggedInUserName']; // getting name of the user f
                 <td><?php echo $ticketElement->issueDate; ?></td>
                 <td><?php echo $ticketElement->status; ?></td>
                 <td><?php echo $ticketElement->issueCategory; ?></td>
-                <td><a class="btn btn-primary" href="viewTicketStaff.php/?id=<?php echo $ticketElement->attributes(); ?>" role="button">
+                <td><a class="btn btn-primary" href="viewTicketStaff.php?id=<?php echo $ticketElement->attributes(); ?>" role="button">
                         View and Add Message</a></td>
-                <td><a class="btn btn-primary" href="updateTicketStatus.php/?id=<?php echo $ticketElement->attributes(); ?>" role="button">
+                <td><a class="btn btn-primary" href="updateTicketStatus.php?id=<?php echo $ticketElement->attributes(); ?>" role="button">
                         Update Status</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
-    <a class="btn btn-primary" href="addTicket.php" role="button">Add New Ticket</a>
 </div>
 
 </body>

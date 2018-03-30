@@ -12,18 +12,13 @@ error_reporting(E_ALL);
 session_start();
 
 $tickets = simplexml_load_file("tickets.xml");
-$tickets->preserveWhiteSpace = false;
-$tickets->formatOutput = true;
 
 $userIdLogged = $_SESSION['loggedInUserId']; // to add it to XML data directly and use it in the next page
-
 
 
 if(isset($_POST['add']))
 {
 
-//     $display = var_dump($_POST['add']);
-//     echo $display;
     // storing form input
     $ticketId = $_POST['ticketId'];
     $ticketDate = $_POST['dated'];
@@ -31,6 +26,8 @@ if(isset($_POST['add']))
     $ticketCategory = $_POST['category'];
     $ticketClientId = $_POST['clientId'];
     $ticketMessage = $_POST['message'];
+    $ticketDate = date("Y-m-d");
+    $ticketTime = date("h:i:sa");
 
     //load xml file
 
@@ -39,7 +36,6 @@ if(isset($_POST['add']))
 
     // input data into xml file
     $ticket = $tickets->addChild('ticket');
-//    echo $ticket;
     $ticket->addAttribute('id',$ticketId);
     $ticket->addChild('issueDate', $ticketDate);
     $ticket->addChild('status', $ticketStatus);
@@ -48,6 +44,8 @@ if(isset($_POST['add']))
     $messages = $ticket->addChild('messages');
     $message = $messages->addChild('message',$ticketMessage);
     $message->addAttribute('userId',$userIdLogged);
+    $message->addAttribute('dated',$ticketDate);
+    $message->addAttribute('time', $ticketTime);
 
     $tickets->saveXML("tickets.xml");
 
@@ -62,11 +60,6 @@ if(isset($_POST['add']))
     <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<!--        <script type="text/javascript">-->
-<!--            $(function () {-->
-<!--                $('#datetimepicker1').datetimepicker();-->
-<!--            });-->
-<!--        </script>-->
     </head>
 </head>
 
@@ -83,21 +76,12 @@ if(isset($_POST['add']))
             <div class="col-md-4 mb-3">
 
                 <label for="dated">Issue Date</label>
-<!--                <div class='input-group date' id='datetimepicker1'>        datepicker -->
-<!--                    <input type='text' class="form-control" />-->
-<!--                    <span class="input-group-addon">-->
-<!--                        <span class="glyphicon glyphicon-calendar"></span>-->
-<!--                    </span>-->
-<!--                </div>-->
                 <input type="date" class="form-control" name="dated" placeholder="YYYY-MM-DD" required>
             </div>
             <div class="col-md-4 mb-3">
-                <label for="ticketStatus">Ticket Status</label>
-                <select class="custom-select" name="ticketStatus">
-                    <option selected>-Choose Status of Ticket--</option>
-                    <option value="New">New</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Resolved">Resolved</option>
+                <label for="disabledSelect">Ticket Status</label>
+                <select id="disabledSelect" class="form-control" name="ticketStatus">
+                    <option>New</option>    <!-- this is done as the ticket created would always be new status by the client -->
                 </select>
             </div>
         </div>
@@ -117,6 +101,7 @@ if(isset($_POST['add']))
             </div>
         </div>
         <input class="btn btn-primary" type="submit" name="add" value="Add Ticket" role="button"/>
+        <a class="btn btn-outline-success" href="clientIndex.php" role="button">Home</a>
     </form>
 </div>
 

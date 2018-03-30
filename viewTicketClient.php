@@ -10,21 +10,27 @@ session_start();
 
 $userIdLogged = $_SESSION['loggedInUserId']; // getting session variable to access and add it to XML data directly
 
+if(getUserRole($userIdLogged) == 'staff')
+{
+    header("Location: error.php");
+}
 
 if(isset($_GET['id']))
 {
     $id = $_GET['id']; // passing query value into a variable
     $ticket = $tickets->xpath("/tickets/ticket[@id=$id]")[0];
-    //var_dump($ticket);
     $messages = $ticket->messages;
-
 
     if(isset($_POST['addMessage']))
     {
         $ticketMessage = $_POST['message'];
+        $ticketDate = date("Y-m-d");
+        $ticketTime = date("h:i:sa");
 
         $message = $messages->addChild('message', $ticketMessage);
         $message->addAttribute('userId',$userIdLogged);
+        $message->addAttribute('dated',$ticketDate);
+        $message->addAttribute('time', $ticketTime);
 
         $tickets->saveXML("tickets.xml");
 
@@ -36,9 +42,7 @@ function getUserRole($userId)
 {
     $users = simplexml_load_file("users.xml");
     $user = $users->xpath("/users/user[@id=$userId]")[0];
-    echo $user;
     return $user->attributes()->role; // return the role of the userId
-
 }
 
 function getUserName($userId)
@@ -57,14 +61,18 @@ function getMessage($userId,$ticketId)
 }
 
 ?>
-
-    <html>
-    <title>Ticket Details</title>
-    <head>
+<html>
+<title>Ticket Details</title>
+<head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    </head>
-    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+ <body>
+
     <div class="container">
         <h1>Ticket Details</h1>
 
@@ -87,12 +95,14 @@ function getMessage($userId,$ticketId)
                     <dl class="row">
                         <?php foreach ($messages->message as $ticketElement) :?>
                             <?php if(getUserRole($ticketElement->attributes()) == 'client') { ?>
-                                <dt class="col-sm-4"><?php echo getUserName($ticketElement->attributes()); ?></dt>
-                                <dd class="col-sm-8"><?php echo $ticketElement; ?></dd>
+                                <dt class="col-sm-8"><?php echo getUserName($ticketElement->attributes());?>
+                                    (Dated: <?php echo $ticketElement["dated"]; ?> Time: <?php echo $ticketElement["time"]; ?>)</dt>
+                                <dd class="col-sm-8"><?php echo $ticketElement;?></dd>
                             <?php }  ?>
                             <?php if(getUserRole($ticketElement->attributes()) == 'staff') { ?>
-                                <dt class="col-sm-4"><?php echo getUserName($ticketElement->attributes()); ?>(Support Staff)</dt>
-                                <dd class="col-sm-8"><?php echo $ticketElement; ?></dd>
+                                <dt class="col-sm-8"><?php echo getUserName($ticketElement->attributes()); ?>(Support Staff)
+                                    (Dated: <?php echo $ticketElement["dated"]; ?> Time: <?php echo $ticketElement["time"]; ?>)</dt>
+                                <dd class="col-sm-8"><?php echo $ticketElement;?></dd>
                             <?php } ?>
                         <?php endforeach;?>
                     </dl>
@@ -104,12 +114,10 @@ function getMessage($userId,$ticketId)
                 <label for="message">Your message</label>
                 <textarea class="form-control" rows="5" name="message" placeholder="Here you can enter additional messages for the support staff to address..."></textarea>
             </div>
-
             <input class="btn btn-primary" type="submit" name="addMessage" value="Add Message" role="button"/>
+            <a class="btn btn-outline-success" href="clientIndex.php" role="button">Home</a>
         </form>
-
-
     </div> <!-- end of container -->
+ </body>
+</html>
 
-    </body>
-    </html>

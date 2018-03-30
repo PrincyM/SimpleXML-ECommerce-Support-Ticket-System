@@ -18,6 +18,20 @@ $userIdLoggedName = $_SESSION['loggedInUserName']; // getting name of the user f
 
 $ticket = $tickets->xpath("/tickets/ticket/clientId[text()=$userIdLogged]/parent::*"); // using the xpath to get tickets raised by this user logged in
 
+
+if(getUserRole($userIdLogged) == 'staff')
+{
+    header("Location: error.php");
+}
+
+function getUserRole($userId)
+{
+    $users = simplexml_load_file("users.xml");
+    $user = $users->xpath("/users/user[@id=$userId]")[0];
+    echo $user;
+    return $user->attributes()->role; // return the role of the userId
+
+}
 ?>
 
 <html>
@@ -31,11 +45,13 @@ $ticket = $tickets->xpath("/tickets/ticket/clientId[text()=$userIdLogged]/parent
 </head>
 
 <body>
+<div class="container">
+<a class="btn btn-primary" href="logout.php" role="button">Logout</a>
 <h3 class="text-center">Welcome, <?php echo $userIdLoggedName; ?></h3>
 
 <p class="text-center">The following tickets are available for your login: </p>
 
-<div class="container">
+
     <table class="table table-hover">
         <thead>
         <tr>
@@ -54,7 +70,7 @@ $ticket = $tickets->xpath("/tickets/ticket/clientId[text()=$userIdLogged]/parent
                 <td><?php echo $ticketElement->issueDate; ?></td>
                 <td><?php echo $ticketElement->status; ?></td>
                 <td><?php echo $ticketElement->issueCategory; ?></td>
-                <td><a class="btn btn-primary" href="viewTicketClient.php/?id=<?php echo $ticketElement->attributes(); ?>" role="button">
+                <td><a class="btn btn-primary" href="viewTicketClient.php?id=<?php echo $ticketElement->attributes(); ?>" role="button">
                         View Details</a></td>
             </tr>
         <?php endforeach; ?>
@@ -62,7 +78,6 @@ $ticket = $tickets->xpath("/tickets/ticket/clientId[text()=$userIdLogged]/parent
     </table>
     <a class="btn btn-primary" href="addTicket.php" role="button">Add New Ticket</a>
 </div>
-
 </body>
 </html>
 

@@ -10,6 +10,10 @@ session_start();
 
 $userIdLogged = $_SESSION['loggedInUserId']; // getting session variable to add it to XML data directly
 
+if(getUserRole($userIdLogged) == 'client')
+{
+    header("Location: error.php");
+}
 
 if(isset($_GET['id']))
 {
@@ -17,7 +21,6 @@ if(isset($_GET['id']))
     $ticket = $tickets->xpath("/tickets/ticket[@id=$id]")[0];
     //var_dump($ticket);
     $messages = $ticket->messages;
-
 
     if(isset($_POST['addMessage']))
     {
@@ -32,14 +35,10 @@ if(isset($_GET['id']))
 
     if(isset($_POST['updateStatus'])) // if the status update button is clicked
     {
-
         $ticketStatusUpdate = $_POST['ticketStatus'];
-        var_dump($ticketStatusUpdate);
 
         $ticketStatus = $tickets->xpath("/tickets/ticket[@id=$id]/status")[0];
-        var_dump($ticketStatus);
-
-        $ticket->status = $ticketStatusUpdate; // replacing the status node with the new status update
+        $ticket->status = $ticketStatusUpdate; // replacing the status element with the new value
 
        $tickets->saveXML("tickets.xml");
 
@@ -54,7 +53,6 @@ function getUserRole($userId)
     $user = $users->xpath("/users/user[@id=$userId]")[0];
     echo $user;
     return $user->attributes()->role; // return the role of the userId
-
 }
 
 function getUserName($userId)
@@ -103,11 +101,13 @@ function getMessage($userId,$ticketId)
                 <dl class="row">
                     <?php foreach ($messages->message as $ticketElement) :?>
                         <?php if(getUserRole($ticketElement->attributes()) == 'client') { ?>
-                            <dt class="col-sm-4"><?php echo getUserName($ticketElement->attributes()); ?>(Client)</dt>
+                            <dt class="col-sm-8"><?php echo getUserName($ticketElement->attributes()); ?>(Client)
+                                (Dated: <?php echo $ticketElement["dated"]; ?> Time: <?php echo $ticketElement["time"]; ?>)</dt>
                             <dd class="col-sm-8"><?php echo $ticketElement; ?></dd>
                         <?php }  ?>
                         <?php if(getUserRole($ticketElement->attributes()) == 'staff') { ?>
-                            <dt class="col-sm-4"><?php echo getUserName($ticketElement->attributes()); ?></dt>
+                            <dt class="col-sm-8"><?php echo getUserName($ticketElement->attributes()); ?>
+                                (Dated: <?php echo $ticketElement["dated"]; ?> Time: <?php echo $ticketElement["time"]; ?>)</dt>
                             <dd class="col-sm-8"><?php echo $ticketElement; ?></dd>
                         <?php } ?>
                     <?php endforeach;?>
@@ -124,6 +124,7 @@ function getMessage($userId,$ticketId)
                 <option value="Resolved">Resolved</option>
                 </select>
                 <input class="btn btn-primary" type="submit" name="updateStatus" value="Update Status" role="button"/>
+        <a class="btn btn-outline-success" href="staffIndex.php" role="button">Home</a>
     </form>
 </div> <!-- end of container -->
 
